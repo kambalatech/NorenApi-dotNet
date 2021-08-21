@@ -15,20 +15,20 @@ namespace NorenRestSample
     {
         #region dev  credentials
 
-        public const string endPoint     = "";
-        public const string wsendpoint   = "";
-        public const string uid          = "";
-        public const string actid        = "";
-        public const string pwd          = "";
-        public const string factor2      = dob;
-        public const string pan          = "";
-        public const string dob          = "";
-        public const string imei         = "";
-        public const string vc           = "";
-        
+        public const string endPoint = "";
+        public const string wsendpoint = "";
+        public const string uid = "";
+        public const string actid = "";
+        public const string pwd = "";
+        public const string factor2 = dob;
+        public const string pan = "";
+        public const string dob = "";
+        public const string imei = "";
+        public const string vc = "";
 
-        public const string appkey       = "";
-        public const string newpwd       = "";
+
+        public const string appkey = "";
+        public const string newpwd = "";
         #endregion
         public static bool loggedin = false;
 
@@ -73,24 +73,12 @@ namespace NorenRestSample
                 {
                     switch (opt.ToUpper())
                     {
+                          case "B":
+                            ActionPlaceBuyorder();
+                            break;
                         case "C":
                             // process argument...
                             ActionPlaceCOorder();
-                            break;
-                        case "T":
-                            nApi.SendGetTradeBook(Handlers.OnTradeBookResponse, actid);
-                            break;
-                        case "O":
-                            nApi.SendGetOrderBook(Handlers.OnOrderBookResponse, "");
-                            break;
-                        case "S":
-                            string exch;
-                            string token;
-                            Console.WriteLine("Enter exch:");
-                            exch = Console.ReadLine();
-                            Console.WriteLine("Enter Token:");
-                            token = Console.ReadLine();
-                            nApi.SendGetSecurityInfo(Handlers.OnResponseNOP, exch, token);
                             break;
                         case "H":
                             //check order
@@ -98,26 +86,17 @@ namespace NorenRestSample
                             var orderno = Console.ReadLine();
                             nApi.SendGetOrderHistory(Handlers.OnOrderHistoryResponse, orderno);
                             break;
-                        case "Q":
-                            nApi.SendLogout(Handlers.OnAppLogout);
-                            dontexit = false;
-                        return;
-                        case "B":
-                            ActionPlaceBuyorder();
-                            break;
-                        case "U":
-                            //get user details
-                            nApi.SendGetUserDetails(Handlers.OnUserDetailsResponse);
-                            break;
                         case "G":
                             nApi.SendGetHoldings(Handlers.OnHoldingsResponse, actid, "C");
+                            break;
+                        case "O":
+                            nApi.SendGetOrderBook(Handlers.OnOrderBookResponse, "");
                             break;
                         case "L":
                             nApi.SendGetLimits(Handlers.OnResponseNOP, actid);
                             break;
-
-                        case "W":
-                            nApi.SendSearchScrip(Handlers.OnResponseNOP, "NSE", "INFY");
+                        case "M":
+                            ActionGetOrderMargin();
                             break;
                         case "P":
                             ProductConversion productConversion = new ProductConversion();
@@ -132,6 +111,44 @@ namespace NorenRestSample
                             productConversion.uid = uid;
                             productConversion.postype = "Day";
                             nApi.SendProductConversion(Handlers.OnResponseNOP, productConversion);
+                            break;
+                        case "R":
+                            ActionPlaceBOorder();
+                            break;
+                        case "S":
+                            string exch;
+                            string token;
+                            Console.WriteLine("Enter exch:");
+                            exch = Console.ReadLine();
+                            Console.WriteLine("Enter Token:");
+                            token = Console.ReadLine();
+                            nApi.SendGetSecurityInfo(Handlers.OnResponseNOP, exch, token);
+                            break;
+                        case "T":
+                            nApi.SendGetTradeBook(Handlers.OnTradeBookResponse, actid);
+                            break;
+                        case "Q":
+                            nApi.SendLogout(Handlers.OnAppLogout);
+                            dontexit = false;
+                            return;
+                        case "U":
+                            //get user details
+                            nApi.SendGetUserDetails(Handlers.OnUserDetailsResponse);
+                            break;
+
+                        case "W":
+                            nApi.SendSearchScrip(Handlers.OnResponseNOP, "NSE", "INFY");
+                            break;
+                        case "Y":
+                            Console.WriteLine("Enter exch:");
+                            exch = Console.ReadLine();
+                            Console.WriteLine("Enter Token:");
+                            token = Console.ReadLine();
+                            nApi.SendGetQuote(Handlers.OnResponseNOP, exch, token);
+                            break;
+
+                        case "BM":
+                            ActionGetBasketMargin();
                             break;
                         case "FP":                            
                             nApi.SendForgotPassword(Handlers.OnResponseNOP,endPoint, uid, pan, dob);
@@ -160,13 +177,35 @@ namespace NorenRestSample
             PlaceOrder order = new PlaceOrder();
             order.uid = uid;
             order.actid = actid;
-            order.exch = "NSE";
+            order.exch = "CDS";
             order.tsym = "USDINR27JAN21F";
             order.qty = "10";
             order.dscqty = "0";
             order.prc = "76.0025";
             order.blprc = "74.0025";
             order.prd = "H";
+            order.trantype = "B";
+            order.prctyp = "LMT";
+            order.ret = "DAY";
+            order.ordersource = "MOB";
+
+            nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
+        }
+
+        public static void ActionPlaceBOorder()
+        {
+            //sample cover order
+            PlaceOrder order = new PlaceOrder();
+            order.uid = uid;
+            order.actid = actid;
+            order.exch = "NSE";
+            order.tsym = "INFY-EQ";
+            order.qty = "10";
+            order.dscqty = "0";
+            order.prc = "2800";
+            order.blprc = "2780";
+            order.bpprc = "2820";
+            order.prd = "B";
             order.trantype = "B";
             order.prctyp = "LMT";
             order.ret = "DAY";
@@ -196,6 +235,58 @@ namespace NorenRestSample
             nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
         }
 
+        public static void ActionGetOrderMargin()
+        {
+            //sample cover order
+            OrderMargin order = new OrderMargin();
+            order.uid = uid;
+            order.actid = actid;
+            order.exch = "NSE";
+            order.tsym = "M&M-EQ";
+            order.qty = "10";
+            order.dscqty = "0";
+            order.prc = "100.5";
+
+            order.prd = "I";
+            order.trantype = "B";
+            order.prctyp = "LMT";           
+            
+            nApi.SendGetOrderMargin(Handlers.OnResponseNOP, order);
+        }
+
+        public static void ActionGetBasketMargin()
+        {
+            //sample cover order
+            BasketMargin basket = new BasketMargin();
+            BasketListItem item = new BasketListItem();
+
+            //first order
+            basket.uid = uid;
+            basket.actid = actid;
+            basket.exch = "NSE";
+            basket.tsym = "ABB-EQ";
+            basket.qty = "10";
+            basket.prc = "100.5";
+
+            basket.prd = "I";
+            basket.trantype = "B";
+            basket.prctyp = "LMT";
+
+
+            //second order
+            item.exch = "NSE";
+            item.tsym = "ACC-EQ";
+            item.qty = "20";
+            item.prc = "100.5";
+
+            item.prd = "I";
+            item.trantype = "B";
+            item.prctyp = "LMT";
+            basket.basketlists = new List<BasketListItem>();
+            basket.basketlists.Add(item);
+            nApi.SendGetBasketMargin(Handlers.OnResponseNOP, basket);
+        }
+
         public static void ActionOptions()
         {
             Console.WriteLine("Q: logout.");
@@ -203,10 +294,14 @@ namespace NorenRestSample
             Console.WriteLine("T: get TradeBook");
             Console.WriteLine("B: place a buy order");
             Console.WriteLine("C: place a cover order");
+            Console.WriteLine("R: place a bracket order");
+            Console.WriteLine("Y: get quote");
             Console.WriteLine("S: get security info");
             Console.WriteLine("H: get order history");
             Console.WriteLine("G: get holdings");
             Console.WriteLine("L: get limits");
+            Console.WriteLine("M: get singleorder margin");
+            Console.WriteLine("BM: get basket margin");
             Console.WriteLine("W: search for scrips (min 3 chars)");
             Console.WriteLine("P: position convert");
             Console.WriteLine("U: get user details");
