@@ -29,7 +29,8 @@ namespace NorenRestSample
 
         public const string appkey = "";
         public const string newpwd = "";
-        #endregion
+        #endregion        
+
         public static bool loggedin = false;
 
       
@@ -51,7 +52,7 @@ namespace NorenRestSample
             loginMessage.factor2 = factor2;
             loginMessage.imei = imei;
             loginMessage.vc = vc;
-            loginMessage.source = "API";
+            loginMessage.source = "MOB";
             loginMessage.appkey = appkey;
             nApi.SendLogin(Handlers.OnAppLoginResponse, endPoint, loginMessage);
 
@@ -73,12 +74,15 @@ namespace NorenRestSample
                 {
                     switch (opt.ToUpper())
                     {
-                          case "B":
+                        case "B":
                             ActionPlaceBuyorder();
                             break;
                         case "C":
                             // process argument...
                             ActionPlaceCOorder();
+                            break;
+                        case "D":
+                            ActionGetOptionChain();
                             break;
                         case "G":
                             nApi.SendGetHoldings(Handlers.OnHoldingsResponse, actid, "C");
@@ -294,6 +298,22 @@ namespace NorenRestSample
             nApi.SendGetBasketMargin(Handlers.OnResponseNOP, basket);
         }
 
+        public static void ActionGetOptionChain()
+        {
+            string exch;
+            string tsym;
+            string strike;
+            Console.WriteLine("Enter exch:");
+            exch = Console.ReadLine();
+            Console.WriteLine("Enter TradingSymbol:");
+            tsym = Console.ReadLine();
+            Console.WriteLine("Enter Strike:");
+            strike = Console.ReadLine();
+
+            nApi.SendGetOptionChain(Handlers.OnResponseNOP, exch, tsym, strike, 1);
+
+        }
+
         public static void ActionOptions()
         {
             Console.WriteLine("Q: logout.");
@@ -314,6 +334,7 @@ namespace NorenRestSample
             Console.WriteLine("U: get user details");
             Console.WriteLine("V: get intraday 1 min price data");
             Console.WriteLine("I: get list of index names");
+            Console.WriteLine("D: get Option Chain");
         }
         #endregion
     }
