@@ -52,7 +52,7 @@ namespace NorenRestSample
             loginMessage.factor2 = factor2;
             loginMessage.imei = imei;
             loginMessage.vc = vc;
-            loginMessage.source = "MOB";
+            loginMessage.source = "API";
             loginMessage.appkey = appkey;
             nApi.SendLogin(Handlers.OnAppLoginResponse, endPoint, loginMessage);
 
@@ -111,7 +111,7 @@ namespace NorenRestSample
                             ProductConversion productConversion = new ProductConversion();
                             productConversion.actid = actid;
                             productConversion.exch = "NSE";
-                            productConversion.ordersource = "MOB";
+                            productConversion.ordersource = "API";
                             productConversion.prd = "C";
                             productConversion.prevprd = "I";
                             productConversion.qty = "1";
@@ -148,7 +148,11 @@ namespace NorenRestSample
                             nApi.SendGetTPSeries(Handlers.OnResponseNOP, "NSE", "22" );
                             break;
                         case "W":
-                            nApi.SendSearchScrip(Handlers.OnResponseNOP, "NSE", "INFY");
+                            Console.WriteLine("Enter exch:");
+                            exch = Console.ReadLine();
+                            Console.WriteLine("Enter Token:");
+                            token = Console.ReadLine();
+                            nApi.SendSearchScrip(Handlers.OnResponseNOP, exch, token);
                             break;
                         case "Y":
                             Console.WriteLine("Enter exch:");
@@ -198,7 +202,7 @@ namespace NorenRestSample
             order.trantype = "B";
             order.prctyp = "LMT";
             order.ret = "DAY";
-            order.ordersource = "MOB";
+            order.ordersource = "API";
 
             nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
         }
@@ -220,7 +224,7 @@ namespace NorenRestSample
             order.trantype = "B";
             order.prctyp = "LMT";
             order.ret = "DAY";
-            order.ordersource = "MOB";
+            order.ordersource = "API";
 
             nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
         }
@@ -241,7 +245,7 @@ namespace NorenRestSample
             order.trantype = "B";
             order.prctyp = "LMT";
             order.ret = "DAY";
-            order.ordersource = "MOB";
+            order.ordersource = "API";
 
             nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
         }
