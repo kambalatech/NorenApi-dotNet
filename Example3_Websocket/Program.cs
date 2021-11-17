@@ -40,7 +40,6 @@ namespace dotNetExample
         public const string newpwd = "";
         #endregion      
 
-
         public static NorenRestApi nApi = new NorenRestApi();
 
         static void Main(string[] args)
@@ -62,9 +61,9 @@ namespace dotNetExample
 
             LoginResponse loginResponse = responseHandler.baseResponse as LoginResponse;
             Console.WriteLine("app handler :" + responseHandler.baseResponse.toJson());
-
+            
             //only after login success connect to websocket for market/order updates
-            if(nApi.ConnectWatcher(wsendpoint, Program.OnFeed, null))
+            if (nApi.ConnectWatcher(wsendpoint, Program.OnFeed, null))
             { 
                 //wait for connection
                 Thread.Sleep(2000);
