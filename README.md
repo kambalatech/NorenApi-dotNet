@@ -191,11 +191,12 @@ connect to the broker, only once this function has returned successfully can any
 
 ###### public bool SendSearchScrip(OnResponse response,string exch,string searchtxt)
 The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
+
 Trading Symbol:
-oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
-oSymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
-oSymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
-For MCX, F to be ignored for FUT instruments
+- SymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
+- SymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
+- SymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
+- For MCX, F to be ignored for FUT instruments
 
 Request
 ```
