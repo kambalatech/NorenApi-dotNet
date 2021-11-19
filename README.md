@@ -198,7 +198,7 @@ Trading Symbol:
 - SymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
 - For MCX, F to be ignored for FUT instruments
 
-Request
+###### Request
 ```
 api.SendSearchScrip(Program.OnResponse, 'NSE', 'REL');
 ```
