@@ -55,14 +55,14 @@
 | 19-04-2021 | 1.0.0.1 | TouchlineBroker | TouchlineFeedadded  |
 | 01-01-2021 | 1.0.0.0 | InitialRelease | Based on NorenRestAPI v1.10.0 |
 
-### <a name="md_introduction"></a> INTRODUCTION: About the API
+# <a name="md_introduction"></a> INTRODUCTION: About the API
 
-The Api is a dotNet wrapper of the StarWebAPI whichoffers a combination of Rest calls and WebSocket for the purposes of Trading.
+The Api is a dotNet wrapper of the NorenAPI which offers a combination of Rest calls and WebSocket for the purposes of Trading.
 
 API is developed on VisualStudio2019 and uses .NetStandard 2.0 
 The dependency libraries are 
-  Newtonsoft.Json 9.0.1
-  Websocket.Client4.3.21
+  Newtonsoft.Json  9.0.1
+  Websocket.Client 4.3.21
   
 The namespace NorenRestApiWrapper and class NorenRestApi are of primary use and interest
 
@@ -114,6 +114,8 @@ public static voidOnAppLoginResponse(NorenResponseMsg Response, bool ok)
 ```
 
 The Response is casted to expected DataType ie in this example being LoginResponse, stat is checked to see if the request was successful.
+
+# <a name="md_session"></a> Login and Session
 
 ##  <a name="md_login"></a> Login
 
