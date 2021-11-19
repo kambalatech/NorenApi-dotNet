@@ -1,22 +1,22 @@
-# NoenApi-dotnet
+# NorenApi-dotnet
 
 [INTRODUCTION](#md_introduction)
 
 [Login and Session](#md_session)
 - [Login](#md_login)
+- [UserDetails](#md_userdetails)
 - [ForgotPassword](#md_forgot)
 - [ChangePassword](#md_changepwd)
 - [Logout](#md_logout)
 
 [WatchLists](#md_watchlist)
-- [UserDetails](#md_userdetails)
 - [GetWatchLists](#md_getwatchlist)
-- [AddScriptoWatchList](#_TOC_250032)
+- [AddScriptoWatchList](#md_addscripwatchlist)
 - [DeleteScriptoWatchList](#_TOC_250031)
 
 [Market](#md_market)
-- [SearchScrips](#_TOC_250033)
-- [GetSecurityInfo](#_TOC_250030)
+- [SearchScrips](#md_searchscrips)
+- [GetSecurityInfo](#md_securityinfo)
 - [GetQuote](#_TOC_250012)
 - [GetTimePriceData(Chartdata)](#_TOC_250008)
 - [GetOptionChain](#_TOC_250007)
@@ -120,87 +120,94 @@ The Response is casted to expected DataType ie in this example being LoginRespon
 ###### public bool SendLogin(OnResponse response,string endPoint,LoginMessage login)
 connect to the broker, only once this function has returned successfully can any other operations be performed
 
+##### RequestDetails: As Arguments
 ##### ResponseDetails:LoginResponse
 
-## <a name="md_logout"></a> Logout
-
-###### public bool SendLogout(OnResponse response)
-
-##### RequestDetails:NoParams
-
-##### ResponseDetails:LogoutResponse
-
-## <a name="md_forgot"></a> ForgotPassword
-
-###### public bool SendForgotPassword(OnResponse response,string endpoint,string user,string pan,string dob)
-
-##### RequestDetails: As Arguments
-
-##### ResponseDetails:ForgotPasswordResponse
-
-## <a name="md_changepwd"></a> ChangePassword
-
-###### public bool Changepwd(OnResponse response,Changepwd changepwd)
-
-##### RequestDetails:Changepwd
-
-##### ResponseDetails:ChangepwdResponse
 
 ## <a name="md_userdetails"></a> UserDetails
 
 ###### public bool SendGetUserDetails(OnResponse response)
 
 ##### RequestDetails:NoParams
-
 ##### ResponseDetails:UserDetailsResponse
 
-# WatchLists
 
-## GetWatchListNames
+## <a name="md_logout"></a> Logout
 
-###### publicboolSendGetMWList(OnResponseresponse)
+###### public bool SendLogout(OnResponse response)
+
+##### RequestDetails:NoParams
+##### ResponseDetails:LogoutResponse
+
+
+## <a name="md_forgot"></a> ForgotPassword
+
+###### public bool SendForgotPassword(OnResponse response,string endpoint,string user,string pan,string dob)
+
+##### RequestDetails: As Arguments
+##### ResponseDetails:ForgotPasswordResponse
+
+
+## <a name="md_changepwd"></a> ChangePassword
+
+###### public bool Changepwd(OnResponse response,Changepwd changepwd)
+
+##### RequestDetails:Changepwd
+##### ResponseDetails:ChangepwdResponse
+
+
+# <a name="md_watchlist"></a> WatchLists
+
+## <a name="md_getwatchlistnames"></a> GetWatchListNames
+
+###### public boolSendGetMWList(OnResponseresponse)
 
 ##### Request Details : No Params
 ##### ResponseDetails:MWListResponse 
 
-## GetWatchList
+
+## <a name="md_getwatchlist"></a> GetWatchList
 
 ###### public bool SendGetMarketWatch(OnResponse response,string wlname)
 
 ##### RequestDetails:NoParams
-
 ##### ResponseDetails:MarketWatchResponse
 
-## SearchScrips
-
-###### public bool SendSearchScrip(OnResponse response,string exch,string searchtxt)
-
-##### RequestDetails:
-
-##### ResponseDetails:SearchScripResponse
-
-## AddScriptoWatchList
+##  <a name="md_addscripwatchlist"></a> AddScriptoWatchList
 
 ###### public bool SendAddMultiScripsToMW(OnResponse response,string watchlist,string scrips)
 
-##### RequestDetails:
-
+##### RequestDetails: As Arguments
 ##### ResponseDetails:StandardResponse
 
 ## DeleteScriptoWatchList
 
 ###### public bool SendDeleteMultiMWScrips( OnResponse response,string watchlist,string  scrips)
 
-##### RequestDetails:
-
+##### RequestDetails: As Arguments
 ##### ResponseDetails:StandardResponse
 
-## GetSecurityInfo
+## <a name="md_searchscrips"></a>  SearchScrips
+
+###### public bool SendSearchScrip(OnResponse response,string exch,string searchtxt)
+The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
+Trading Symbol:
+oSymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
+oSymbolName + ExpDate + 'P' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType PE
+oSymbolName + ExpDate + 'C' + StrikePrice for all data having InstrumentName starting with OPT and with OptionType C
+For MCX, F to be ignored for FUT instruments
+
+Request
+```
+api.SendSearchScrip(Program.OnResponse, 'NSE', 'REL');
+```
+###### ResponseDetails:SearchScripResponse
+
+## <a name="md_securityinfo"></a> GetSecurityInfo
 
 ###### public bool SendGetSecurityInfo( OnResponse response,string exch,string token)
 
 ##### RequestDetails:
-
 ##### ResponseDetails:GetSecurityInfoResponse
 
 # Order and Trades
@@ -367,7 +374,7 @@ Accept for t, e,and tk other fields may/may not be present.
 
 |Fields |Possible  value| Description |
 | --- | --- | --- |
-| t | tf | tf representstouchlinefeed |
+| t | tf | tf represents touchline feed |
 | e | NSE,BSE,NFO.. | Exchangename |
 | tk | 22 | ScripToken |
 | lp || LTP |
