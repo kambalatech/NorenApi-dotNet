@@ -25,11 +25,10 @@ namespace NorenRestSample
         public const string dob = "";
         public const string imei = "";
         public const string vc = "";
-
-
         public const string appkey = "";
         public const string newpwd = "";
         #endregion    
+        
 
         public static bool loggedin = false;
 

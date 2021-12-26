@@ -34,8 +34,6 @@ namespace dotNetExample
         public const string dob = "";
         public const string imei = "";
         public const string vc = "";
-
-
         public const string appkey = "";
         public const string newpwd = "";
         #endregion      
@@ -70,7 +68,15 @@ namespace dotNetExample
                 //send subscription for reliance
                 nApi.SubscribeToken("NSE", "2885");
             }
+            int token = 1;
+            while(true)
+            {
+                //check every 5min if we are connected
+                Thread.Sleep(5 * 60 * 1000);
+                nApi.SubscribeToken("NSE", token.ToString());
+                token++;
 
+            }
             Console.ReadLine();
         }
 
@@ -78,7 +84,7 @@ namespace dotNetExample
         {
             NorenFeed feedmsg = Feed as NorenFeed;
             Console.WriteLine(Feed.toJson());
-            if (feedmsg.t == "dk")
+            if (feedmsg.t == "dk" )
             {
                 //acknowledgment
             }
@@ -87,6 +93,7 @@ namespace dotNetExample
                 //feed
                 Console.WriteLine($"Feed received: {Feed.toJson()}");
             }
+            Console.WriteLine($"Feed received: {Feed.toJson()}");
         }
     }
 }
