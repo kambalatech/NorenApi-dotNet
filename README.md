@@ -53,6 +53,7 @@
 
 | Date | Version | Changes | Details |
 | --- | --- | --- | --- |
+| 05-01-2021 | 1.1.0.0 | matches pyapi | pyapi v0.0.15 |
 | 15-11-2021 | 1.0.11.0 | SearchScrips | search text is encoded for M&M etc  |
 | 19-04-2021 | 1.0.0.1 | TouchlineBroker | TouchlineFeedadded  |
 | 01-01-2021 | 1.0.0.0 | InitialRelease | Based on NorenRestAPI v1.10.0 |
@@ -63,8 +64,7 @@ The Api is a dotNet wrapper of the NorenAPI which offers a combination of Rest c
 
 API is developed on VisualStudio2019 and uses .NetStandard 2.0 
 The dependency libraries are 
-  Newtonsoft.Json  9.0.1
-  
+  Newtonsoft.Json  9.0.1  
   
 The namespace NorenRestApiWrapper and class NorenRestApi are of primary use and interest
 
@@ -125,7 +125,32 @@ The Response is casted to expected DataType ie in this example being LoginRespon
 connect to the broker, only once this function has returned successfully can any other operations be performed
 
 ##### RequestDetails: As Arguments
+```
+    LoginMessage loginMessage = new LoginMessage();
+    loginMessage.apkversion = "1.0.0";
+    loginMessage.uid = uid;
+    loginMessage.pwd = pwd;
+    loginMessage.factor2 = factor2;
+    loginMessage.imei = imei;
+    loginMessage.vc = vc;
+    loginMessage.source = "API";
+    loginMessage.appkey = appkey;
+    nApi.SendLogin(Handlers.OnAppLoginResponse, endPoint, loginMessage);
+```
 ##### ResponseDetails:LoginResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| stat  |  Ok or Not_Ok | Login Success Or failure status | 
+| susertoken  |   | session id, avilable subsequently on login success with method UserToken | 
+| lastaccesstime  |   | lastaccesstime | 
+| spasswordreset  | Y  | If Y Mandatory password reset to be enforced. Otherwise the field will be absent. | 
+| exarr  |   | array of strings with enabled exchange names | 
+| uname  |   | User name | 
+| prarr  |   | array of Product Obj with enabled products, as defined below | 
+| actid  |   | Account Id | 
+| email  |   | Email Id | 
+| brkid  |   | Broker Id | 
+| emsg  |   | This will be present only if Login fails.(Redirect to force change password if message is “Invalid Input : Password Expired” or “Invalid Input : Change Password”) | 
 
 
 ## <a name="md_userdetails"></a> UserDetails
@@ -134,33 +159,67 @@ connect to the broker, only once this function has returned successfully can any
 
 ##### RequestDetails:NoParams
 ##### ResponseDetails:UserDetailsResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| exarr  |   | list of exchanges enabled | 
+| orarr  |   | ordertypes enabled for the user| 
+| prarr  |   | list of product object | 
+| brkname |  | Region Category | 
+| brnchid  |   |  Branch Category | 
+| actid  |   | Account Id | 
+| email  |   | Email Id | 
 
 
 ## <a name="md_logout"></a> Logout
 
 ###### public bool SendLogout(OnResponse response)
+Closes the session opened with the server.
 
 ##### RequestDetails:NoParams
+```
+    napi.SendLogout();
+```
 ##### ResponseDetails:LogoutResponse
-
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| stat  |  Ok or Not_Ok | Login Success Or failure status | 
 
 ## <a name="md_forgot"></a> ForgotPassword
 
 ###### public bool SendForgotPassword(OnResponse response,string endpoint,string user,string pan,string dob)
 
 ##### RequestDetails: As Arguments
-##### ResponseDetails:ForgotPasswordResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| uid* |   | User Id | 
+| pan* |   | pan of the user |
+| dob* |   | Date of birth |
 
+##### ResponseDetails:ForgotPasswordResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| stat  |  Ok or Not_Ok | Success Or failure status | 
+| emsg  |   | This will be present only if request fails. |
 
 ## <a name="md_changepwd"></a> ChangePassword
 
 ###### public bool Changepwd(OnResponse response,Changepwd changepwd)
 
 ##### RequestDetails:Changepwd
-##### ResponseDetails:ChangepwdResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| uid* |   | User Id | 
+| oldpwd* |   | old password of the user |
+| pwd* |   | new password of the user |
 
+##### ResponseDetails:ChangepwdResponse
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| stat  |  Ok or Not_Ok | Success Or failure status | 
+| emsg  |   | This will be present only if request fails. |
 
 ## <a name="md_setsession"></a> SetSession
+This method initializes the api with an existing session instead of creating a new session with SendLogin.
 
 ###### public bool SetSession(string endpoint, string uid, string pwd, string usertoken)
 
@@ -207,7 +266,10 @@ connect to the broker, only once this function has returned successfully can any
 ## <a name="md_searchscrips"></a>  SearchScrips
 
 ###### public bool SendSearchScrip(OnResponse response,string exch,string searchtxt)
+
 The call can be made to get the exchange provided token for a scrip or alternately can search for a partial string to get a list of matching scrips
+
+Multiple criteria can be specified for the search with space
 
 Trading Symbol:
 - SymbolName + ExpDate + 'F' for all data having InstrumentName starting with FUT
@@ -221,12 +283,76 @@ api.SendSearchScrip(Program.OnResponse, 'NSE', 'REL');
 ```
 ###### ResponseDetails:SearchScripResponse
 
+list of a ScripItem, which is as follows,
+
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| exch | | Exchange |
+| tsym | | Trading Symbol |
+| token | | Exchange specified Token  |
+| pp | | Price Precision |
+| ti | | Tick Size |
+| ls | | Lot Size |
+
 ## <a name="md_securityinfo"></a> GetSecurityInfo
 
 ###### public bool SendGetSecurityInfo( OnResponse response,string exch,string token)
 
 ##### RequestDetails:
+
+| Json Fields| Possible value| Description| 
+| --- | --- | --- |
+| exch | | Exchange |
+| token | | Exchange specified Token  |
+
 ##### ResponseDetails:GetSecurityInfoResponse
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| stat | ```string``` | True | ok or Not_ok |
+| values | ```string``` | True | properties of the scrip |
+| emsg | ```string``` | False | Error Message |
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| exch | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
+| tsym | ```string``` | True | Trading Symbol is the readable Unique id of contract/scrip |
+| cname| ```string``` | True | Company Name |
+| symnam| ```string``` | True | Symbol Name  |
+| seg| ```string``` | True | Segment |
+| exd| ```string``` | True | Expiry Date |
+| instname| ```string``` | True | Instrument Name |
+| strprc| ```string``` | True | Strike Price |
+| optt| ```string``` | True | Option Type |
+| isin| ```string``` | True | ISIN |
+| ti | ```string``` | True | Tick Size |
+| ls| ```string``` | True | Lot Size |
+| pp| ```string``` | True | Price Precision |
+| mult| ```string``` | True | Multiplier |
+| gp_nd| ```string``` | True | GN/GD * PN/PD  |
+| prcunt| ```string``` | True | Price Units |
+| prcqqty| ```string``` | True | Price Quote Qty |
+| trdunt| ```string``` | True | Trade Units |
+| delunt| ```string``` | True | Delivery Units |
+| frzqty| ```string``` | True | Freeze Qty |
+| gsmind| ```string``` | True | GSM indicator |
+| elmbmrg| ```string``` | True | ELM Buy Margin |
+| elmsmrg| ```string``` | True | ELM Sell Margin |
+| addbmrg| ```string``` | True | Additional Long Margin |
+| addsmrg| ```string``` | True | Additional Short Margin |
+| splbmrg| ```string``` | True | Special Long Margin |
+| splsmrg| ```string``` | True | Special Short Margin |
+| delmrg| ```string``` | True | Delivery Margin |
+| tenmrg| ```string``` | True | Tender Margin |
+| tenstrd| ```string``` | True | Tender Start Date  |
+| tenendd| ```string``` | True | Tender End Date |
+| exestrd| ```string``` | True | Exercise Start Date |
+| exeendd| ```string``` | True | Exercise End Date |
+| elmmrg| ```string``` | True | ELM Margin |
+| varmrg| ```string``` | True | VAR Margin |
+| expmrg| ```string``` | True | Exposure Margin |
+| token| ```string``` | True | Contract Token |
+| prcftr_d| ```string``` | True | ((GN / GD) * (PN/PD)) |
+
 
 # Order and Trades
 
@@ -235,30 +361,136 @@ api.SendSearchScrip(Program.OnResponse, 'NSE', 'REL');
 ###### public bool SendPlaceOrder( OnResponse response,PlaceOrder order  )
 
 ##### RequestDetails:PlaceOrder
+Place an order as follows
+```
+    PlaceOrder order = new PlaceOrder();
+    order.uid = uid;
+    order.actid = actid;
+    order.exch = "NSE";
+    order.tsym = "M&M-EQ";
+    order.qty = "10";
+    order.dscqty = "0";
+    order.prc = "100.5";
+    order.prd = "I";
+    order.trantype = "B";
+    order.prctyp = "LMT";
+    order.ret = "DAY";
+    order.ordersource = "API";
 
+    nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
+```
+Place a Cover Order as follows
+```
+    PlaceOrder order = new PlaceOrder();
+    order.uid = uid;
+    order.actid = actid;
+    order.exch = "CDS";
+    order.tsym = "USDINR27JAN21F";
+    order.qty = "10";
+    order.dscqty = "0";
+    order.prc = "76.0025";
+    order.blprc = "74.0025";
+    order.prd = "H";
+    order.trantype = "B";
+    order.prctyp = "LMT";
+    order.ret = "DAY";
+    order.ordersource = "API";
+
+    nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
+```
+Place a Bracket  Order as follows
+```
+    PlaceOrder order = new PlaceOrder();
+    order.uid = uid;
+    order.actid = actid;
+    order.exch = "NSE";
+    order.tsym = "INFY-EQ";
+    order.qty = "10";
+    order.dscqty = "0";
+    order.prc = "2800";
+    order.blprc = "2780";
+    order.bpprc = "2820";
+    order.prd = "B";
+    order.trantype = "B";
+    order.prctyp = "LMT";
+    order.ret = "DAY";
+    order.ordersource = "API";
+
+    nApi.SendPlaceOrder(Handlers.OnResponseNOP, order);
+```
 ##### ResponseDetails:PlaceOrderResponse
+This is an acknowledgement of the order received by OMS.  NorenOrdNo is the unique identifier for the same.
+
+```
+    public class PlaceOrderResponse : NorenResponseMsg
+    {
+        public string request_time;
+        public string norenordno;
+    }
+```
 
 
 ## ModifyOrder
 
 ###### bool SendModifyOrder( OnResponse response,ModifyOrder order  )
+To Modify an order, use the OrderNumber returned in place order, you can only modify an open order(Status: New). 
 
 ##### RequestDetails:ModifyOrder
+```
+    ModifyOrder order = new ModifyOrder();
+    order.norenordno = ordno;
+    order.exch = "NSE";
+    order.tsym = "M&M-EQ";
+    order.qty = "15";
+    order.prc = "100.5";
+    order.prd = "I";    
+    order.prctyp = "LMT";
+    order.ret = "DAY";
+    
+    nApi.SendModifyOrder(Handlers.OnResponseNOP, order);
+```
 ##### ResponseDetails:ModifyOrderResponse
-
+an acknowlegment is returned
+```
+    public class ModifyOrderResponse : NorenResponseMsg
+    {
+        public string request_time;
+        public string norenordno;
+    }
+```
 ## CancelOrder
 
 ###### public bool SendCancelOrder( OnResponse response,string norenordno)
+To cancel an order, send the OrderNumber returned by  PlaceOrder
 
 ##### RequestDetails:
+```
+    nApi.SendCancelOrder(Handlers.OnResponseNOP, order);
+```
+
 ##### ResponseDetails:CancelOrderResponse
-
+an acknowlegment is returned
+```
+    public class CancelOrderResponse : NorenResponseMsg
+    {
+        public string request_time;
+        public string norenordno;
+    }
+```
 ## ExitSNOOrder
-
 ###### public bool SendExitSNOOrder( OnResponse response,string norenordno,string product)
 
 ##### RequestDetails:
+```
+    public class ExitSNOOrder : NorenMessage
+    {
+        public string norenordno;
+        public string prd;
+        public string uid;
+    }
+```
 ##### ResponseDetails:ExitSNOOrderResponse
+an acknowledgement is returned
 
 ## OrderMargin
 
@@ -377,11 +609,22 @@ Api.OnOrderCallback += Application.OnOrderHandler;
 ## Connect
 
 ###### public bool ConnectWatcher(string uri,OnFeed marketdata Handler,OnOrderFeed orderHandler)
+starts the websocket, WebSocket feed has 2 types of ticks( t=touchline d=depth)and 2 stages (k=acknowledgement, f=further change in tick). 
 
 
 ## SubscribeMarketData
 
 ###### public bool SubscribeToken(string exch,string token)
+t='tk' is sent once on subscription for each instrument. this will have all the fields with the most recent value
+thereon t='tf' is sent for fields that have changed.
+```
+For example
+quote event: 03-12-2021 11:54:44{'t': 'tk', 'e': 'NSE', 'tk': '11630', 'ts': 'NTPC-EQ', 'pp': '2', 'ls': '1', 'ti': '0.05', 'lp': '118.55', 'h': '118.65', 'l': '118.10', 'ap': '118.39', 'v': '162220', 'bp1': '118.45', 'sp1': '118.50', 'bq1': '26', 'sq1': '6325'}
+quote event: 03-12-2021 11:54:45{'t': 'tf', 'e': 'NSE', 'tk': '11630', 'lp': '118.45', 'ap': '118.40', 'v': '166637', 'sp1': '118.55', 'bq1': '3135', 'sq1': '30'}
+quote event: 03-12-2021 11:54:46{'t': 'tf', 'e': 'NSE', 'tk': '11630', 'lp': '118.60'}
+```
+in the example above we see first message t='tk' with all the values, 2nd message has lasttradeprice avg price and few other fields with value changed.. note bp1 isnt sent as its still 118.45
+in the next tick ( 3rd message) only last price is changed to 118.6
 
 ##### Request:
 |Fields |Possible  value| Description |
@@ -428,15 +671,9 @@ Accept for t, e,and tk other fields may/may not be present.
 
 ## SubscribeOrderUpdate
 
-###### public bool SubscribeOrders(OnOrderFeed orderFeed,string account)
+This is auto subscribed by the api
 
-##### Request:
-
-|Fields|Possible  value| Description |
-| --- | --- | --- |
-| actid | | Account id based on which order updated to be sent. |
-
-##### OrderUpdatesubscriptionUpdates:NorenOrderFeed
+##### Order Updates : NorenOrderFeed
 
 |Fields |Possible  value| Description |
 | --- | --- | --- |
