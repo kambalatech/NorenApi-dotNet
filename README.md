@@ -497,13 +497,23 @@ an acknowledgement is returned
 ###### public bool SendGetOrderMargin( OnResponse response,OrderMargin ordermargin)
 
 ##### RequestDetails:OrderMargin
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:OrderMarginResponse
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ## OrderBook
 
 ###### public bool SendGetOrderBook( OnResponse response,string product)
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+|  No Parameters  |
+
 ##### ResponseDetails:OrderBookResponselistofOrderBookItem
 
 ## MultiLegOrderBook
@@ -511,49 +521,109 @@ an acknowledgement is returned
 ###### public bool SendGetMultiLegOrderBook( OnResponse response,string product)
 
 ##### RequestDetails:
-##### ResponseDetails:MultiLegOrderBookResponselistofMultiLegOrderBookItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+|  No Parameters  |
+
+##### ResponseDetails: MultiLegOrderBookResponse - list of MultiLegOrderBookItem
+list of MultiLegOrderBookItem
 
 ## SingleOrderHistory
 
 ###### public bool SendGetOrderHistory( OnResponse response,string norenordno)
 
 ##### RequestDetails:
-##### ResponseDetails:OrderHistoryResponselistofSingleOrdHistItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
+##### ResponseDetails: list of SingleOrdHistItem
+
 
 ## TradeBook
 
 ###### public bool SendGetTradeBook( OnResponse response,string account)
 
 ##### RequestDetails:
-##### ResponseDetails:TradeBookResponselistofTradeBookItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
+##### ResponseDetails: TradeBookResponse - list of TradeBookItem
 
 ## ExchMsg
 
 ###### public bool SendGetExchMsg( OnResponse response,ExchMsg exchmsg)
 
 ##### RequestDetails:ExchMsg
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:ExchMsgResponselistofExchMsgItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
-## OrderMargin
-
-###### public bool SendGetOrderMargin( OnResponse response,OrderMargin ordermargin)
-
-##### RequestDetails:OrderMargin
-##### ResponseDetails:OrderMarginResponse
 
 ## PositionsBook
 
 ###### public bool SendGetPositionBook( OnResponse response,string account)
 
 ##### RequestDetails:
-##### ResponseDetails:PositionBookResponselistofPositionBookItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
+##### ResponseDetails: PositionBookResponse - list of PositionBookItem which is as follows,
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+|stat| ```string``` | False |Position book success or failure indication.|
+|exch| ```string``` | False |Exchange segment|
+|tsym| ```string``` | False |Trading symbol / contract.|
+|token| ```string``` | False |Contract Token|
+|uid| ```string``` | False |User Id|
+|actid|```string``` | False | Account Id|
+|prd| ```string``` | False | Product name|
+|netqty| ```string``` | False | Net Position Quantity|
+|netavgprc| ```string``` | False | Net Position Average Price|
+|daybuyqty| ```string``` | False | Day Buy Quantity|
+|daysellqty| ```string``` | False | Day Sell Quantity|
+|daybuyavgprc| ```string``` | False | Day Buy Average Price|
+|daysellavgprc| ```string``` | False | Day Sell Average Price|
+|daybuyamt| ```string``` | False | Day Buy Amount|
+|daysellamt| ```string``` | False | Day Sell Amount|
+|cfbuyqty| ```string``` | False | Carry Forward Sell Quantity|
+|cforgavgprc| ```string``` | False | Original Average Price|
+|cfsellqty| ```string``` | False | Carry Forward Sell Quantity|
+|cfbuyavgprc| ```string``` | False | Carry Forward Buy Average Price|
+|cfsellavgprc| ```string``` | False | Carry Forward Sell Average Price|
+|cfbuyamt| ```string``` | False | Carry Forward Buy Amount|
+|cfsellamt| ```string``` | False | Carry Forward Sell Amount|
+|lp| ```string``` | False | LTP|
+|rpnl| ```string``` | False | Realized Profit and Loss|
+|urmtom| ```string``` | False | UnRealized Mark To Market (Can be recalculated in LTP update : = netqty * (lp from web socket - netavgprc) * prcftr |
+|bep| ```string``` | False | Breakeven Price|
+|openbuyqty| ```string``` | False | Open Buy Order Quantity |
+|opensellqty| ```string``` | False | Open Sell Order Quantity |
+|openbuyamt| ```string``` | False | Open Buy Order Amount |
+|opensellamt| ```string``` | False | Open Sell Order Amount|
+|openbuyavgprc| ```string``` | False ||
+|opensellavgprc| ```string``` | False ||
+|mult| ```string``` | False ||
+|pp| ```string``` | False ||
+|prcftr| ```string``` | False ||
+|ti| ```string``` | False ||
+|ls| ```string``` | False ||
+|request_time| ```string``` | False ||
 
 ## ProductConversion
 
-###### public bool SendGetOrderMargin( OnResponse response,ProductConversion prdConv)
+###### public bool SendProductConversion( OnResponse response,ProductConversion prdConv)
 
-##### RequestDetails:ProductConversion
-##### ResponseDetails:ProductConversionResponse
+##### RequestDetails: ProductConversion
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
+##### ResponseDetails: ProductConversionResponse
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 # Holdings and Limits
 
@@ -562,42 +632,99 @@ an acknowledgement is returned
 ###### public bool SendGetHoldings( OnResponse response,string account,string product)
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:HoldingsResponselistofHoldingsItem
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ## Limits
 
 ###### public bool SendGetLimits(OnResponse response,string account,string product = "", string segment = "";  string exchange = "")
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:LimitsResponse
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 # MarketInfo
 
 ## GetIndexList
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ## GetTopListNames
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ## GetTopList
 
 ##### RequestDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+
 ##### ResponseDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ##  <a name="md_tpseries"></a> GetTimePriceData /ChartData
 
 ##### RequestDetails: public bool SendGetTPSeries(OnResponse response, string exch, string token, string starttime = null, string endtime = null, string interval = null)
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ##### ResponseDetails: list of TPSeriesItem
-
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
 
 ## GetOptionChain
+gets the chart date for the symbol
 
 ##### RequestDetails:
-##### ResponseDetails:
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| exchange | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
+| token | ```string``` | True | token number of the contract|
+| starttime | ```string``` | True | Start time (seconds since 1 jan 1970) |
+| endtime | ```string``` | True | End Time (seconds since 1 jan 1970)|
+| interval | ```integer``` | True | Candle size in minutes (1,3,5,10,15,30,60,120,240)|
+
+##### ResponseDetails: the response is as follows,
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| stat | ```string``` | True | ok or Not_ok |
+| values | ```string``` | True | properties of the scrip |
+| emsg | ```string``` | False | Error Message |
+
+| Param | Type | Optional |Description |
+| --- | --- | --- | ---|
+| time | ```string``` | True | DD/MM/CCYY hh:mm:ss |
+| into | ```string``` | True | Interval Open |
+| inth | ```string``` | True | Interval High |
+| intl | ```string``` | True | Interval Low  |
+| intc | ```string``` | True | Interval Close  |
+| intvwap | ```string``` | True | Interval vwap  |
+| intv | ```string``` | True | Interval volume  |
+| v | ```string``` | True | volume  |
+| inoi | ```string``` | True | Interval oi change  |
+| oi | ```string``` | True | oi  |
 
 # OrderUpdates and MarketDataUpdate
 
