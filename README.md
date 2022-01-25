@@ -11,43 +11,44 @@
 - [SetSession](#md_setsession)
 
 [WatchLists](#md_watchlist)
-- [UserDetails](#md_userdetails)
-- [GetWatchLists](#md_getwatchlist)
+- [GetWatchListNames](#md_getwatchlistnames)
+- [GetWatchList](#md_getwatchlist)
 - [AddScriptoWatchList](#md_addscripwatchlist)
-- [DeleteScriptoWatchList](#_TOC_250031)
+- [DeleteScriptoWatchList](#md_delscripwatchlist)
 
 [Market](#md_market)
 - [SearchScrips](#md_searchscrips)
 - [GetSecurityInfo](#md_securityinfo)
 - [GetQuote](#_TOC_250012)
 - [GetTimePriceData(Chartdata)](#md_tpseries)
-- [GetOptionChain](#_TOC_250007)
-- [GetIndexList](#_TOC_250011)
-- [ExchMsg](#_TOC_250019)
+- [GetOptionChain](#md_optionchain)
+- [GetIndexList](#md_indexlist)
+- [ExchMsg](#md_exchmsg)
+- [TopListNames](#md_toplistnames)
+- [TopList](#md_toplist)
 
 [Orders and Trades](#md_ordersntrades)
-- [PlaceOrder](#_TOC_250028)
-- [ModifyOrder](#_TOC_250027)
-- [CancelOrder](#_TOC_250026)
-- [ExitSNOOrder](#_TOC_250025)
-- [ProductConversion](#_TOC_250016)
-- [OrderMargin](#_TOC_250024)
-- [OrderBook](#_TOC_250023)
-- [TradeBook](#_TOC_250020)
-- [SingleOrderHistory](#_TOC_250021)
-- [MultiLegOrderBook](#_TOC_250022)
+- [PlaceOrder](#md_placeorder)
+- [ModifyOrder](#md_modifyorder)
+- [CancelOrder](#md_cancelorder)
+- [ExitSNOOrder](#md_exitorder)
+- [ProductConversion](#md_prdconvert)
+- [OrderMargin](#md_ordermargin)
+- [OrderBook](#md_orderbook)
+- [TradeBook](#md_tradebook)
+- [SingleOrderHistory](#md_orderhistory)
+- [MultiLegOrderBook](#md_mlorderbook)
 - [BasketOrderMargin](#_TOC_250024)
-- [PositionsBook](#_TOC_250017)
-- [Holdings](#_TOC_250014)
-- [Limits](#_TOC_250013)
+- [PositionsBook](#md_positions)
+- [Holdings](#md_holdings)
+- [Limits](#md_limits)
 
-[Order and MarketData Update](#_TOC_250006)
+[Order and MarketData Update](#md_ordermktupdate)
 
-- [Connect](#_TOC_250005)
-- [SubscribeMarketData](#_TOC_250004)
-- [UnSubscribeMarketData](#_TOC_250003)
-- [SubscribeOrderUpdate](#_TOC_250000)
-
+- [Connect](#md_connect)
+- [SubscribeMarketData](#md_subscribe)
+- [UnSubscribeMarketData](#md_unsubscribe)
+- [SubscribeOrderUpdate](#md_subscribeorders)
 
 # <a name="md_introduction"></a> INTRODUCTION: About the API
 
@@ -302,7 +303,7 @@ Response is of type StandardResponse :
 | Json Fields| Possible value| Description| 
 | --- | --- | --- |
 
-## DeleteScriptoWatchList
+##  <a name="md_delscripwatchlist"></a> DeleteScriptoWatchList
 
 ###### public bool SendDeleteMultiMWScrips( OnResponse response,string watchlist,string  scrips)
 
@@ -500,7 +501,7 @@ Response data will have below fields.
 
 # Order and Trades
 
-## PlaceOrder
+## <a name="md_placeorder"></a> PlaceOrder
 
 ###### public bool SendPlaceOrder( OnResponse response,PlaceOrder order  )
 
@@ -603,7 +604,7 @@ Response will be of type PlaceOrderResponse :
 |norenordno||It will be present only on successful Order placement to OMS.|
 |emsg||This will be present only if Order placement fails|
 
-## ModifyOrder
+## <a name="md_modifyorder"></a> ModifyOrder
 
 ###### bool SendModifyOrder( OnResponse response,ModifyOrder order  )
 
@@ -650,7 +651,7 @@ Response will be of type ModifyOrderResponse :
 |request_time||Response received time.|
 |emsg||This will be present only if Order modification fails|
 
-## CancelOrder
+## <a name="md_cancelorder"></a> CancelOrder
 
 ###### public bool SendCancelOrder( OnResponse response,string norenordno)
 To cancel an order, send the OrderNumber returned by  PlaceOrder
@@ -677,8 +678,7 @@ Response data will be in json format with below fields.
 |request_time||Response received time.|
 |emsg||This will be present only if Order cancelation fails|
 
-
-## ExitSNOOrder
+## <a name="md_exitorder"></a> ExitSNOOrder
 ###### public bool SendExitSNOOrder( OnResponse response,string norenordno,string product)
 
 Example:
@@ -707,7 +707,7 @@ Response is of type ExitSNOOrderResponse :
 |request_time||Response received time.|
 |emsg||This will be present only if Order cancelation fails|
 
-## OrderMargin
+## <a name="md_ordermargin"></a> OrderMargin
 
 ###### public bool SendGetOrderMargin( OnResponse response,OrderMargin ordermargin)
 
@@ -721,7 +721,7 @@ Response is of type OrderMarginResponse:
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-## OrderBook
+## <a name="md_orderbook"></a> OrderBook
 
 ###### public bool SendGetOrderBook( OnResponse response,string product)
 
@@ -780,7 +780,7 @@ Response in case of failure:
 |request_time||Response received time.|
 |emsg||Error message|
 
-## MultiLegOrderBook
+## <a name="md_mlorderbook"></a> MultiLegOrderBook
 
 ###### public bool SendGetMultiLegOrderBook( OnResponse response,string product)
 
@@ -796,7 +796,7 @@ MultiLegOrderBookResponse has a list of MultiLegOrderBookItem
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-## SingleOrderHistory
+## <a name="md_orderhistory"></a> SingleOrderHistory
 
 ###### public bool SendGetOrderHistory( OnResponse response,string norenordno)
 
@@ -855,7 +855,7 @@ Response data in case of failure:
 |emsg||Error message|
 
 
-## TradeBook
+## <a name="md_tradebook"></a> TradeBook
 
 ###### public bool SendGetTradeBook( OnResponse response,string account)
 
@@ -907,7 +907,7 @@ Response data will be in json format with below fields in case of failure:
 |emsg||Error message|
 
 
-## ExchMsg
+## <a name="md_exchmsg"></a> ExchMsg
 
 ###### public bool SendGetExchMsg( OnResponse response,ExchMsg exchmsg)
 
@@ -925,7 +925,7 @@ ExchMsgResponse has a list of ExchMsg
 | --- | --- | --- | ---|
 
 
-## PositionsBook
+## <a name="md_positions"></a> PositionsBook
 
 ###### public bool SendGetPositionBook( OnResponse response,string account)
 
@@ -990,7 +990,7 @@ Response data in case of failure:
 |request_time||Response received time.|
 |emsg||Error message|
 
-## ProductConversion
+## <a name="md_prdconvert"></a> ProductConversion
 
 ###### public bool SendProductConversion( OnResponse response,ProductConversion prdConv)
 
@@ -1018,7 +1018,7 @@ Response Details :
 
 # Holdings and Limits
 
-## Holdings
+## <a name="md_holdings"></a> Holdings
 
 ###### public bool SendGetHoldings( OnResponse response,string account,string product)
 retrieves the holdings as a list
@@ -1072,7 +1072,7 @@ Response data will be in json format with below fields in case of failure:
 |request_time||Response received time.|
 |emsg||Error message|
 
-## Limits
+## <a name="md_limits"></a> Limits
 
 ###### public bool SendGetLimits(OnResponse response,string account,string product = "", string segment = "";  string exchange = "")
 
@@ -1235,13 +1235,10 @@ Sample Failure Response :
    "stat":"Not_Ok",
    "emsg":"Server Timeout :  "
 }
-##### ResponseDetails:
-| Param | Type | Optional |Description |
-| --- | --- | --- | ---|
 
-# MarketInfo
+# <a name="md_market"></a> MarketInfo
 
-## GetIndexList
+## <a name="md_indexlist"></a> GetIndexList
 
 Request Details :
 
@@ -1256,7 +1253,7 @@ IndexListResponse has a list of Index
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-## GetTopListNames
+## <a name="md_toplistnames"></a> GetTopListNames
 
 Request Details :
 
@@ -1271,7 +1268,7 @@ TopListNamesResponse has a list of Index
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-## GetTopList
+## <a name="md_toplist"></a> GetTopList
 
 Request Details :
 
@@ -1288,7 +1285,7 @@ TopListResponse has a list of Index
 
 ##  <a name="md_tpseries"></a> GetTimePriceData /ChartData
 
-##### RequestDetails: public bool SendGetTPSeries(OnResponse response, string exch, string token, string starttime = null, string endtime = null, string interval = null)
+###### public bool SendGetTPSeries(OnResponse response, string exch, string token, string starttime = null, string endtime = null, string interval = null)
 
 Request Details :
 
@@ -1327,8 +1324,7 @@ Response data will be in json format  in case for success.
 |oi||oi|
 
 
-## GetOptionChain
-gets the chart date for the symbol
+## <a name="md_optionchain"></a> GetOptionChain
 
 gets the contracts of related strikes
 
@@ -1358,20 +1354,21 @@ the response is as follows,
 | ti | ```string``` | False | Tick Size |
 | ls | ```string``` | False | Lot Size |
 
-# OrderUpdates and MarketDataUpdate
+#  <a name="md_ordermktupdate"></a> OrderUpdates and MarketDataUpdate
 
 This Api allows you to receive updates receivethe marketdata and order updates in the application callbacks as an option, to do so connect as follows.
 
 Api.OnFeedCallback  += Application.OnFeedHandler;
 Api.OnOrderCallback += Application.OnOrderHandler;
 
-## Connect
+## <a name="md_connect"></a> Connect
 
 ###### public bool ConnectWatcher(string uri,OnFeed marketdata Handler,OnOrderFeed orderHandler)
+
 starts the websocket, WebSocket feed has 2 types of ticks( t=touchline d=depth)and 2 stages (k=acknowledgement, f=further change in tick). 
 
 
-## SubscribeMarketData
+## <a name="md_subscribe"></a> SubscribeMarketData
 
 ###### public bool SubscribeToken(string exch,string token)
 t='tk' is sent once on subscription for each instrument. this will have all the fields with the most recent value
@@ -1417,7 +1414,7 @@ Accept for t, e,and tk other fields may/may not be present.
 | sq1 || Best Sell Quantity 1 |
 | sp1 || Best Sell Price 1 |
 
-## UnSubscribeMarketData
+## <a name="md_unsubscribe"></a> UnSubscribeMarketData
 
 ###### public bool UnSubscribeToken(string exch,string token)
 
@@ -1428,7 +1425,7 @@ Accept for t, e,and tk other fields may/may not be present.
 | exch | NSE,BSE,NFO... | Exchange |
 | token || ScripToken |
 
-## SubscribeOrderUpdate
+## <a name="md_subscribeorders"></a>  SubscribeOrderUpdate
 
 This is auto subscribed by the api
 
