@@ -76,7 +76,7 @@ connect to the broker, only once this function has returned successfully can any
 Loginrequest takes three arguments
 
 1. Callback: this is the function where the application will be handling the response
-2. Endpoint: NorenOMS address
+2. Endpoint: OMS address
 3. MessageData: parameters of the request being made.
 
 The Callback is of signature
