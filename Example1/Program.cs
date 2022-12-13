@@ -15,20 +15,20 @@ namespace NorenRestSample
     {
         #region dev  credentials
 
-        public const string endPoint = "";
-        public const string wsendpoint = "";
-        public const string uid = "";
-        public const string actid = "";
-        public const string pwd = "";
+        public const string endPoint = "http://matsya.kambala.co.in:9959/NorenWClient/";
+        public const string wsendpoint = "wss://www.kambala.co.in/NorenWSWeb/";
+        public const string uid = "MOBKUMAR";
+        public const string actid = "MOBKUMAR";
+        public const string pwd = "Asd@1234";
         public const string factor2 = dob;
         public const string pan = "";
-        public const string dob = "";
-        public const string imei = "";
-        public const string vc = "";
-        public const string appkey = "";
+        public const string dob = "01011970";
+        public const string imei = "abc1234";
+        public const string vc = "IDART_DESK";
+        public const string appkey = "12be8cef3b1758f5";
         public const string newpwd = "";
-        #endregion    
-        
+        #endregion
+
 
         public static bool loggedin = false;
 
@@ -37,7 +37,8 @@ namespace NorenRestSample
         {
             Program.loggedin = true;
             nApi.SubscribeOrders(Handlers.OnOrderUpdate, uid);
-            nApi.SubscribeToken("NSE", "22");
+            //nApi.SubscribeToken("NSE", "22");
+            nApi.SubscribeTokenDepth("NSE", "22");
             
         }
         public static NorenRestApi nApi = new NorenRestApi();
@@ -149,7 +150,7 @@ namespace NorenRestSample
 
                             //start and end time are optional
                             //here we are getting one day's data
-                            nApi.SendGetTPSeries(Handlers.OnResponseNOP, "NSE", "22", start.ToString() );
+                            nApi.SendGetTPSeries(Handlers.OnResponseNOP, "NSE", "22", start.ToString(), null , "5" );
                             break;
                         case "W":
                             Console.WriteLine("Enter exch:");
