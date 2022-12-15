@@ -15,17 +15,17 @@ namespace NorenRestSample
     {
         #region dev  credentials
 
-        public const string endPoint = "http://matsya.kambala.co.in:9959/NorenWClient/";
-        public const string wsendpoint = "wss://www.kambala.co.in/NorenWSWeb/";
-        public const string uid = "MOBKUMAR";
-        public const string actid = "MOBKUMAR";
-        public const string pwd = "Asd@1234";
+        public const string endPoint = "http://api.noren.com/NorenWClient/";
+        public const string wsendpoint = "wss://api.noren.com/NorenWSWeb/";
+        public const string uid = "";
+        public const string actid = "";
+        public const string pwd = "";
         public const string factor2 = dob;
         public const string pan = "";
-        public const string dob = "01011970";
-        public const string imei = "abc1234";
-        public const string vc = "IDART_DESK";
-        public const string appkey = "12be8cef3b1758f5";
+        public const string dob = "";
+        public const string imei = "";
+        public const string vc = "";
+        public const string appkey = "";
         public const string newpwd = "";
         #endregion
 
