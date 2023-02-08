@@ -30,7 +30,7 @@
 [Calculators]
 - [span_calculator](#md-span_calculator)
 - [get_option_greek](#md-get_option_greek)
-
+- [get_brokerage](#md-get_brokerage)
 
 [Orders and Trades](#md_ordersntrades)
 - [PlaceOrder](#md_placeorder)
@@ -620,6 +620,10 @@ Sample Failure Response :
  "stat":"Not_Ok",
  "emsg":"Invalid Input :  jData is Missing."
 }
+
+## <a name="get_brokerage"></a> GetBrokerage
+
+Get the brokerage of a single order.
 
 # Order and Trades
 
@@ -1475,6 +1479,9 @@ the response is as follows,
 | pp | ```string``` | False | Price Precision |
 | ti | ```string``` | False | Tick Size |
 | ls | ```string``` | False | Lot Size |
+
+
+## <a name="md_optionchain"></a> GetBrokerage
 
 #  <a name="md_ordermktupdate"></a> OrderUpdates and MarketDataUpdate
 
