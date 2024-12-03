@@ -179,7 +179,7 @@ namespace dotNetExample
             nApi.onStreamCloseCallback = Program.onStreamClose;
             nApi.onStreamErrorCallback = Program.onStreamError;
             //only after login success connect to websocket for market/order updates
-            if (nApi.ConnectWatcher(wsendpoint, Program.OnFeed, null)) 
+            if (nApi.ConnectWatcher(wsendpoint, Program.OnFeed, Program.OnOrderUpdate)) 
             { 
                 //wait for connection
                 //Thread.Sleep(2000);
@@ -237,7 +237,13 @@ namespace dotNetExample
                     Console.WriteLine($"Feed processed: {mapMarketData[key].toJson()}"); 
                 }
             }
-            
+
+        }
+
+
+        public static void OnOrderUpdate(NorenOrderFeed Order)
+        {
+            Console.WriteLine($"Order update: {Order.toJson()}");
         }
     }
 }
