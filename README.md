@@ -21,6 +21,7 @@
 - [GetSecurityInfo](#md_securityinfo)
 - [GetQuote](#_TOC_250012)
 - [GetTimePriceData(Chartdata)](#md_tpseries)
+- [GetDailyChartData(EOD Chart Data)](#md_dailyseries)
 - [GetOptionChain](#md_optionchain)
 - [GetIndexList](#md_indexlist)
 - [ExchMsg](#md_exchmsg)
@@ -1445,6 +1446,42 @@ Response data will be in json format  in case for success.
 |intc||Interval close|
 |intvwap||Interval vwap|
 |intv||Interval volume|
+|v||volume|
+|intoi||Interval io change|
+|oi||oi|
+
+##  <a name="md_dailyseries"></a> GetTimePriceData /ChartData
+
+###### public bool GetDailyChartData(OnResponse response, string exch, string tsym, string starttime, string endtime)
+
+Request Details :
+
+|Parameters|Possible value|Description|
+| --- | --- | ---|
+|exch*||Exchange|
+|tsym*||Trading Symbol (please note in timeseries send token no, here send ACC-EQ, INFY-EQ etc|
+|starttime||Start time (seconds since 1 jan 1970)|
+|endtime||End Time (seconds since 1 jan 1970)|
+
+Response Details :
+
+Response data will be in json format  in case for failure.
+
+|Json Fields|Possible value|Description|
+| --- | --- | ---|
+|stat|Not_Ok|REquest failure indication.|
+|emsg||This will be present only in case of errors. |
+
+Response data will be in json format  in case for success.
+
+|Json Fields|Possible value|Description|
+| --- | --- | ---|
+|stat|Ok| success indication.|
+|time||DD/MM/CCYY hh:mm:ss|
+|into||Interval open|
+|inth||Interval high|
+|intl||Interval low|
+|intc||Interval close|
 |v||volume|
 |intoi||Interval io change|
 |oi||oi|
