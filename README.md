@@ -77,16 +77,19 @@ Appkey  : The secretkey issued to you, donot append the userid to it.
 
 ###### public string SendgetOAuthURL(string oauth_url, string client_id)
 
-The method requests the oauth provider to initiate verification with enduser and return the auth_code to further retrieve the access_token
+The method requests the oauth provider to initiate verification with enduser after login it returns the auth_code to further retrieve the access_token
 
 arguments
 
-1. Callback: this is the function where the application will be handling the response
-2. Endpoint: OMS address
-3. MessageData: parameters of the request being made.
+1. oauth_url
+2. client_id
+
+the method returns a url to be opened in a browser to login and on success it provides the auth_code.
+
 
 ###### public bool SendgetAccessToken(OnResponse response, string endPoint, string authCode, string secretcode, string client_id, string uid)
 
+auth_code is retreived by login from url returned from SendgetOAuthURL method
 
 The Callback is of signature
 
@@ -95,7 +98,7 @@ The Callback is of signature
 
 Example:
 ```
-auth_code is retreived by login in the previous method
+
 
 nApi.SendgetAccessToken(Handlers.OnAppLoginResponse, endPoint, auth_code, secretcode, client_id, uid);
 ```
