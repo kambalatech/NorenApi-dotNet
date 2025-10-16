@@ -75,32 +75,29 @@ Appkey  : The secretkey issued to you, donot append the userid to it.
 
 ##  <a name="md_login"></a> Login
 
-###### public bool SendLogin(OnResponse response,string endPoint,LoginMessage login)
+###### public string SendgetOAuthURL(string oauth_url, string client_id)
 
-connect to the broker, only once this function has returned successfully can any other operations be performed
+The method requests the oauth provider to initiate verification with enduser and return the auth_code to further retrieve the access_token
 
-Loginrequest takes three arguments
+arguments
 
 1. Callback: this is the function where the application will be handling the response
 2. Endpoint: OMS address
 3. MessageData: parameters of the request being made.
 
+###### public bool SendgetAccessToken(OnResponse response, string endPoint, string authCode, string secretcode, string client_id, string uid)
+
+
 The Callback is of signature
 
- ###### public delegate void OnResponse(NorenResponseMsg Response,bool ok)
+ ###### public delegate void OnResponse(GetAccessTokenResponse Response,bool ok)
 
 
 Example:
 ```
-LoginMessage loginMessage = new LoginMessage();
-loginMessage.uid = uid;
-loginMessage.pwd = pwd;
-loginMessage.factor2 = pan;
-loginMessage.imei = "134243434";
-loginMessage.source = "API";
-loginMessage.appkey = appkey;
+auth_code is retreived by login in the previous method
 
-nApi.SendLogin(Program.OnAppLoginResponse, endPoint, loginMessage);
+nApi.SendgetAccessToken(Handlers.OnAppLoginResponse, endPoint, auth_code, secretcode, client_id, uid);
 ```
 
 The callback will be handled as below
@@ -108,11 +105,16 @@ The callback will be handled as below
 ```
 public static void OnAppLoginResponse(NorenResponseMsg Response, bool ok)
 {
-   LoginResponse loginResp= Response as LoginResponse;
+    GetAccessTokenResponse accessTokenRsp = new GetAccessTokenResponse();
 
-   if(loginResp.stat=="Ok")
+
+   if(accessTokenRsp.stat=="Ok")
    {
-       //do all work here
+        string uid = accessTokenRsp.UserId;
+        string ref_tok = accessTokenRsp.refresh_token;
+        string actid = accessTokenRsp.actid;
+        string usertoken = accessTokenRsp.susertoken;
+        string access_token = accessTokenRsp.access_token
    }
 }
 ```
